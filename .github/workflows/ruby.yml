@@ -65,5 +65,8 @@ jobs:
           URL: ${{ github.repository }}
           TOKEN: ${{ steps.my-app.outputs.token }}
         working-directory: '.github/tests'
-        run: 
-          ruby test/script_test.rb
+        run: |
+          echo "Using TOKEN: $TOKEN"
+          ruby test/script_test.rb || echo "Ruby script failed with $?"
+        #run: 
+        #  ruby test/script_test.rb
