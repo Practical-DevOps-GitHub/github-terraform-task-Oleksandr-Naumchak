@@ -133,3 +133,4 @@ resource "github_actions_secret" "pat_secret" {
   secret_name = "PAT"
   plaintext_value = var.github_pat
 }
+
