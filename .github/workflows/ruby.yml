@@ -13,7 +13,9 @@ env:
     SECRETS_TOKEN: ${{ secrets.PAT }}
     TF_VAR_github_pat: ${{ secrets.PAT }}
     TF_VAR_discord_webhook_url: ${{ secrets.DISCORD_URL }}
-    TF_VAR_deploy_key_pub: ${{ secrets.DEPLOY_KEY }}    
+    TF_VAR_deploy_key_pub: ${{ secrets.DEPLOY_KEY }}   
+    TF_VAR_github_token: ${{ secrets.PAT }}
+    TF_VAR_github_owner: ${{ secrets.GIT_OWNER }}
 on:
   push:
     branches: [ main, develop ]
