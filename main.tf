@@ -7,6 +7,18 @@ terraform {
   }
 }
 
+provider "github" {
+    token = var.github_token
+    owner = var.github_owner
+}
+
+variable "github_token" {
+  type = string
+}
+
+variable "github_owner" {
+  type = string
+}
 variable "discord_webhook_url" {
   description = "Discord webhook URL"
   type        = string
