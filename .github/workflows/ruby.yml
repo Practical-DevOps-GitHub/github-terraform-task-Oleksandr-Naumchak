@@ -61,12 +61,12 @@ jobs:
           working-directory: '.github/tests'
           bundler-cache: true
       - name: Run tests
+        timeout-minutes: 5
         env:
           URL: ${{ github.repository }}
           TOKEN: ${{ steps.my-app.outputs.token }}
         working-directory: '.github/tests'
         run: |
+          set -x
           echo "Using TOKEN: $TOKEN"
           ruby test/script_test.rb || echo "Ruby script failed with $?"
-        #run: 
-        #  ruby test/script_test.rb
