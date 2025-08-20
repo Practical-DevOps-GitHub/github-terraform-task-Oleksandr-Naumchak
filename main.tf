@@ -7,6 +7,24 @@ terraform {
   }
 }
 
+variable "discord_webhook_url" {
+  description = "Discord webhook URL"
+  type        = string
+  sensitive   = true
+}
+
+variable "deploy_key_pub" {
+  description = "Public deploy SSH key"
+  type        = string
+  sensitive   = true
+}
+
+variable "github_pat" {
+  description = "GitHub Personal Access Token"
+  type        = string
+  sensitive   = true
+}
+
 locals {
   repo_name = "github-terraform-task-Oleksandr-Naumchak"
   user_name = "softservedata"
@@ -86,7 +104,7 @@ resource "github_repository_file" "develop_pr_template" {
 resource "github_repository_webhook" "discord_webhook" {
   repository = local.repo_name
  configuration {
-   url = "https://discordapp.com/api/webhooks/1401908467408830556/K6JaAFbdGrZcldOIvqD-M9qaQXHcEVG3AJ9BCRsyUSIjUoiXvisczCNiJX9hgCsH5GlR"
+   url = var.discord_webhook_url
    content_type = "application/json"
  }
   events  = ["pull_request"]
@@ -95,11 +113,11 @@ resource "github_repository_webhook" "discord_webhook" {
 resource "github_repository_deploy_key" "repository_deploy_key" {
   title = "DEPLOY_KEY"
   repository = local.repo_name
-  key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdasr0jzJx3YJGPprCkLwdQqMPdNJYlSLe9logw/NXPTu/KWyYtlShvWX9IT9Fz2mXJa+fT5bFkNBhFw54hqbv6Tibl3mgdnJ+h+e7vhLE/569t7rw3w95usVy6vQhJT9LlcqITI9C72RDS4zyOJcQVp4Hijcwc9jhK45G81AXW8av6k/hzZ1uG06+7wkd7CKsiYajS9LiG8GSf5AV0ytyVD19VfMNJ4YNc89nymwvfFpC2LMkLVesOECA2tBfiSnDqdRGt0xhueU08c1AE8AXEvMF5ug4EL6uRP6SiwxCa/1MhuxtgZt2B2UBQMv/FwC+uucT7QWlsTnLVEplDs+t naumchak.o@1c-dev01"
+  key = var.deploy_key_pub
 }
 
 resource "github_actions_secret" "pat_secret" {
   repository = local.repo_name
   secret_name = "PAT"
-  plaintext_value = "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"
+  plaintext_value = var.github_pat
 }
